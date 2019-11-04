@@ -1,5 +1,5 @@
 //TODO: STEP 1 - Import the useState hook.
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import BottomRow from "./BottomRow";
 import Buttons from "./Buttons"
@@ -23,6 +23,14 @@ function App() {
 		quarter: 0
 	})
 
+	let [time, setTime] = useState(0);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setTime(time + 1)
+		}, 1000)
+	})
+
 	return (
 		<div className="container">
 			<section className="scoreboard">
@@ -34,19 +42,19 @@ function App() {
 
 						<div className="home__score">{lionsScore.home}</div>
 					</div>
-					<div className="timer">00:03</div>
+					<div className="timer">00:{time < 10 ? "0" + time : time}</div>
 					<div className="away">
 						<h2 className="away__name">Tigers</h2>
 						<div className="away__score">{tigersScore.away}</div>
 					</div>
 				</div>
 				<BottomRow down={gameState.down} toGo={gameState.toGo} ballOn={gameState.ballOn} quarter={gameState.quarter} />
-				<IncrementingButtons down={gameState.down} toGo={gameState.toGo} ballOn={gameState.ballOn} quarter={gameState.quarter} setGameState={setGameState}/>
+				<IncrementingButtons down={gameState.down} toGo={gameState.toGo} ballOn={gameState.ballOn} quarter={gameState.quarter} setGameState={setGameState} />
 			</section>
 
-			<Buttons lionsScore={lionsScore} setLionsScore={setLionsScore} 
+			<Buttons lionsScore={lionsScore} setLionsScore={setLionsScore}
 				tigersScore={tigersScore} setTigersScore={setTigersScore} />
-			
+
 		</div>
 	);
 }
