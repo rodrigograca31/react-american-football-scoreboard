@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import "./App.css";
 import BottomRow from "./BottomRow";
 import Buttons from "./Buttons"
+import IncrementingButtons from './IncrementingButtons'
 
 function App() {
 	//TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
@@ -14,7 +15,13 @@ function App() {
 		away: 30
 	});
 
-	
+
+	const [gameState, setGameState] = useState({
+		down: 0,
+		toGo: 0,
+		ballOn: 0,
+		quarter: 0
+	})
 
 	return (
 		<div className="container">
@@ -33,7 +40,8 @@ function App() {
 						<div className="away__score">{tigersScore.away}</div>
 					</div>
 				</div>
-				<BottomRow />
+				<BottomRow down={gameState.down} toGo={gameState.toGo} ballOn={gameState.ballOn} quarter={gameState.quarter} />
+				<IncrementingButtons down={gameState.down} toGo={gameState.toGo} ballOn={gameState.ballOn} quarter={gameState.quarter} setGameState={setGameState}/>
 			</section>
 
 			<Buttons lionsScore={lionsScore} setLionsScore={setLionsScore} 

@@ -13,7 +13,6 @@ const Buttons = (props) => {
 		}
 	}
 
-	// number = 4;
 	return (
 		<section className="buttons">
 			<div className="homeButtons">
@@ -29,7 +28,7 @@ const Buttons = (props) => {
 }
 
 Buttons.defaultProps = {
-	number: 31
+	
 }
 
 export default Buttons
