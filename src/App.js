@@ -1,43 +1,62 @@
 //TODO: STEP 1 - Import the useState hook.
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import BottomRow from "./BottomRow";
+import Buttons from "./Buttons"
+import IncrementingButtons from './IncrementingButtons'
 
 function App() {
-  //TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
+	//TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
 
-  return (
-    <div className="container">
-      <section className="scoreboard">
-        <div className="topRow">
-          <div className="home">
-            <h2 className="home__name">Lions</h2>
+	const [lionsScore, setLionsScore] = useState({
+		home: 20
+	});
+	const [tigersScore, setTigersScore] = useState({
+		away: 30
+	});
 
-            {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
 
-            <div className="home__score">32</div>
-          </div>
-          <div className="timer">00:03</div>
-          <div className="away">
-            <h2 className="away__name">Tigers</h2>
-            <div className="away__score">32</div>
-          </div>
-        </div>
-        <BottomRow />
-      </section>
-      <section className="buttons">
-        <div className="homeButtons">
-          {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */}
-          <button className="homeButtons__touchdown">Home Touchdown</button>
-          <button className="homeButtons__fieldGoal">Home Field Goal</button>
-        </div>
-        <div className="awayButtons">
-          <button className="awayButtons__touchdown">Away Touchdown</button>
-          <button className="awayButtons__fieldGoal">Away Field Goal</button>
-        </div>
-      </section>
-    </div>
-  );
+	const [gameState, setGameState] = useState({
+		down: 0,
+		toGo: 0,
+		ballOn: 0,
+		quarter: 0
+	})
+
+	let [time, setTime] = useState(0);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setTime(time + 1)
+		}, 1000)
+	})
+
+	return (
+		<div className="container">
+			<section className="scoreboard">
+				<div className="topRow">
+					<div className="home">
+						<h2 className="home__name">Lions</h2>
+
+						{/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
+
+						<div className="home__score">{lionsScore.home}</div>
+					</div>
+					<div className="timer">00:{time < 10 ? "0" + time : time}</div>
+					<div className="away">
+						<h2 className="away__name">Tigers</h2>
+						<div className="away__score">{tigersScore.away}</div>
+					</div>
+				</div>
+				<BottomRow down={gameState.down} toGo={gameState.toGo} ballOn={gameState.ballOn} quarter={gameState.quarter} />
+				<IncrementingButtons down={gameState.down} toGo={gameState.toGo} ballOn={gameState.ballOn} quarter={gameState.quarter} setGameState={setGameState} />
+			</section>
+
+			<Buttons lionsScore={lionsScore} setLionsScore={setLionsScore}
+				tigersScore={tigersScore} setTigersScore={setTigersScore} />
+
+		</div>
+	);
 }
 
 export default App;
